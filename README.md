@@ -1,85 +1,136 @@
 # Desafio programação - para vaga desenvolvedor
+ 
+### Para rodar a aplicação
+Requisitos
+* Git
+* Docker e Docker Compose
 
-Por favor leiam este documento do começo ao fim, com muita atenção.
-O intuito deste teste é avaliar seus conhecimentos técnicos em programação.
-O teste consiste em parsear [este arquivo de texto(CNAB)](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt) e salvar suas informações(transações financeiras) em uma base de dados a critério do candidato.
-Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
+Basta executar os seguintes comandos:
+```bash
+git clone git@github.com:brendo10x/desafio-dev.git
+```
+```bash
+cd desafio-dev
+```
+```bash
+docker-compose up
+```
+Após finalizado, acessar o frontend da aplicação:
+* Obs: para importação, o arquivo CNAB.txt está na raiz do projeto.
+```bash
+http://localhost:5200/
+```
+Backend da aplicação
+```bash
+http://localhost:9090/swagger-ui.html
+```
 
-# Instruções de entrega do desafio
+### Setup de desenvolvimento
+Requisitos
+* Git
+* Docker e Docker Compose
+* Java 11
+* Maven 3.6.3
+* NPM
+* Node 14
 
-1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
-2. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
-3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato Bycoders_ com cópia para rh@bycoders.com.br.
+## 1. Rodar o Docker
+```bash
+git clone git@github.com:brendo10x/desafio-dev.git
+```
+```bash
+cd desafio-dev
+```
+```bash
+docker-compose up
+```
+Após rodar, o docker subirá os seguintes containers:
+1. Um app completo de produção:
+* Frontend com Angular: http://localhost:5200/
+* Backend com Spring Boot: http://localhost:9090/
+* Documentação da API do Backend com Spring Boot: http://localhost:9090/swagger-ui.html
+* Banco de dados PostgreSQL de produção (na porta 7000:5432)
+2. Um banco de dados de teste:
+* Banco de dados PostgreSQL de teste/desenvolvimento (na porta 9000:5432)
 
-# Descrição do projeto
+Conforme descritos em detalhes nos arquivos:
+1. docker-compose.yml - na pasta raiz do projeto
+2. backend/Dockerfile
+3. frontend/Dockerfile
 
-Você recebeu um arquivo CNAB com os dados das movimentações finanaceira de várias lojas.
-Precisamos criar uma maneira para que estes dados sejam importados para um banco de dados.
+## Configurando o backend com Spring Boot
+Requisitos:
+- Java 11
+- Maven 3.6.3
 
-Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt), normalize os dados e armazene-os em um banco de dados relacional e exiba essas informações em tela.
+Rodar os seguintes comandos:
+```bash
+cd desafio-dev/backend
+```
+Por fim, importe na sua IDE de preferência.
 
-**Sua aplicação web DEVE:**
+Após executado, basta acessar o backend:
+```bash
+http://localhost:8080/
+```
+Documentação da API:
+```bash
+http://localhost:8080/swagger-ui.html
+```
+### Como rodar os testes?
+Obs: para os testes, será utilizado o JUnit e DBUnit em conjunto. Os testes estão na pasta backend/src/test/java.
 
-1. Ter uma tela (via um formulário) para fazer o upload do arquivo(pontos extras se não usar um popular CSS Framework )
-2. Interpretar ("parsear") o arquivo recebido, normalizar os dados, e salvar corretamente a informação em um banco de dados relacional, **se atente as documentações** que estão logo abaixo.
-3. Exibir uma lista das operações importadas por lojas, e nesta lista deve conter um totalizador do saldo em conta
-4. Ser escrita na sua linguagem de programação de preferência
-5. Ser simples de configurar e rodar, funcionando em ambiente compatível com Unix (Linux ou Mac OS X). Ela deve utilizar apenas linguagens e bibliotecas livres ou gratuitas.
-6. Git com commits atomicos e bem descritos
-7. PostgreSQL, MySQL ou SQL Server
-8. Ter testes automatizados
-9. Docker compose (Pontos extras se utilizar)
-10. Readme file descrevendo bem o projeto e seu setup
-11. Incluir informação descrevendo como consumir o endpoint da API
+## Configurando o frontend com Angular
+Requisitos:
+- Node.js 14
+- npm
+- Angular CLI
 
-**Sua aplicação web não precisa:**
+Rodar os seguintes comandos:
+```bash
+cd desafio-dev/frontend
+```
+Para baixar as dependências
+```bash
+npm install
+```
+Rodar o app
+```bash
+ng serve
+```
+Se preferir, importe na sua IDE de preferência.
 
-1. Lidar com autenticação ou autorização (pontos extras se ela fizer, mais pontos extras se a autenticação for feita via OAuth).
-2. Ser escrita usando algum framework específico (mas não há nada errado em usá-los também, use o que achar melhor).
-3. Documentação da api.(Será um diferencial e pontos extras se fizer)
+Mais informações na documentação oficial: https://angular.io/guide/setup-local
 
-# Documentação do CNAB
+Após executado, basta acessar o app:
+```bash
+http://localhost:4200/
+```
+Obs: lembrando que o backend precisa ser executado antes, para disponibilizar a API para o front consumir.
 
-| Descrição do campo  | Inicio | Fim | Tamanho | Comentário
-| ------------- | ------------- | -----| ---- | ------
-| Tipo  | 1  | 1 | 1 | Tipo da transação
-| Data  | 2  | 9 | 8 | Data da ocorrência
-| Valor | 10 | 19 | 10 | Valor da movimentação. *Obs.* O valor encontrado no arquivo precisa ser divido por cem(valor / 100.00) para normalizá-lo.
-| CPF | 20 | 30 | 11 | CPF do beneficiário
-| Cartão | 31 | 42 | 12 | Cartão utilizado na transação 
-| Hora  | 43 | 48 | 6 | Hora da ocorrência atendendo ao fuso de UTC-3
-| Dono da loja | 49 | 62 | 14 | Nome do representante da loja
-| Nome loja | 63 | 81 | 19 | Nome da loja
+## Overview das ferramentas utilizadas no desafio
+* Java 11
+* Spring Boot
+* Spring Data JPA
+* Maven
+* PostgreSQL
+* Docker
+* Docker Compose
+* Flyway
+* ModelMapper
+* JUnit
+* DBUnit
+* Hamcrest
+* Lombok
+* Slf4j
+* Swagger2
+* Postman
+* Spring Tools Suite
+* Git
+* Angular
+* Node js
+* WebStorm
 
-# Documentação sobre os tipos das transações
-
-| Tipo | Descrição | Natureza | Sinal |
-| ---- | -------- | --------- | ----- |
-| 1 | Débito | Entrada | + |
-| 2 | Boleto | Saída | - |
-| 3 | Financiamento | Saída | - |
-| 4 | Crédito | Entrada | + |
-| 5 | Recebimento Empréstimo | Entrada | + |
-| 6 | Vendas | Entrada | + |
-| 7 | Recebimento TED | Entrada | + |
-| 8 | Recebimento DOC | Entrada | + |
-| 9 | Aluguel | Saída | - |
-
-# Avaliação
-
-Seu projeto será avaliado de acordo com os seguintes critérios.
-
-1. Sua aplicação preenche os requerimentos básicos?
-2. Você documentou a maneira de configurar o ambiente e rodar sua aplicação?
-3. Você seguiu as instruções de envio do desafio?
-4. Qualidade e cobertura dos testes unitários.
-
-Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
-
-# Referência
-
-Este desafio foi baseado neste outro desafio: https://github.com/lschallenges/data-engineering
-
----
-
-Boa sorte!
+#### Padrões e boas práticas adotados no projeto
+- Padrões de projeto: Strategy, Facade, Singleton, DTO, SOLID, Clean Code.
+- Ágil: TDD, BDD, Kanban e Pomodoro
