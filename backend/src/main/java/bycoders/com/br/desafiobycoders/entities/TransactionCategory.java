@@ -10,11 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import bycoders.com.br.desafiobycoders.enums.TransactionCategoryType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @Table(name = "transaction_categories")
 public class TransactionCategory {
@@ -23,12 +29,11 @@ public class TransactionCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String description;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private TransactionCategoryType TransactionCategoryType;
-	
-	
+
 }

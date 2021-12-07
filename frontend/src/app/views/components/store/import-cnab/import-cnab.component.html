@@ -1,0 +1,29 @@
+<mat-card>
+    <mat-card-title>Importar CNAB</mat-card-title>
+    <mat-card-subtitle>Realize a importação</mat-card-subtitle>
+    <mat-card-actions>
+
+        <mat-form-field>
+            <ngx-mat-file-input #uploadFileInput formControlName="fileCnab" (change)="selectFile($event)"
+                                placeholder="Selecionar arquivo"></ngx-mat-file-input>
+            <mat-icon matSuffix>folder</mat-icon>
+        </mat-form-field>
+        <button (click)="upload()" mat-raised-button color="accent">Upload</button>
+        <button (click)="uploadFileInput.clear();resetMessage()" mat-raised-button color="clear">Limpar</button>
+
+        <div *ngIf="currentFile || message" class="progress">
+            {{ progress }}% - {{message}}
+            <div
+                    class="progress-bar progress-bar-info progress-bar-striped"
+                    role="progressbar"
+                    attr.aria-valuenow="{{ progress }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [ngStyle]="{ width: progress + '%' }"
+            >
+            </div>
+        </div>
+        <br/><br/>
+
+    </mat-card-actions>
+</mat-card>

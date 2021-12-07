@@ -1,0 +1,70 @@
+<mat-card>
+    <mat-card-title>Transações por Loja</mat-card-title>
+    <h4>Selecione uma Loja</h4>
+    <mat-form-field appearance="standard">
+        <mat-label>Opções</mat-label>
+        <mat-select (selectionChange)="onChangeSelectedStore()" [(value)]="selectedStore">
+            <mat-option *ngFor="let store of stores" [value]="store">
+                {{store.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <br/>
+    <div *ngIf="selectedStore!=null">
+        Loja: {{selectedStore?.name}}
+        <br/>
+        Proprietário da loja: {{selectedStore?.ownerName}}
+        <br/>
+        Saldo da loja: R${{selectedStore?.balance | number: '1.2-2'}}
+    </div>
+
+</mat-card>
+
+<div style="width: 100%!important;" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">>
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID</th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="beneficiarysCpf">
+            <th mat-header-cell *matHeaderCellDef> CPF do Beneficiário</th>
+            <td mat-cell *matCellDef="let element"> {{element.beneficiarysCpf}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cardNumber">
+            <th mat-header-cell *matHeaderCellDef> Cartão</th>
+            <td mat-cell *matCellDef="let element"> {{element.cardNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Dinheiro</th>
+            <td mat-cell *matCellDef="let element"> R${{element.amount  | number: '1.2-2'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type_description">
+            <th mat-header-cell *matHeaderCellDef> Descrição de transação</th>
+            <td mat-cell *matCellDef="let element"> {{element.transactionCategory.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Tipo de transação</th>
+            <td mat-cell *matCellDef="let element"> {{element.transactionCategory.transactionCategoryType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="transactionAt">
+            <th mat-header-cell *matHeaderCellDef> Data da transação</th>
+            <td mat-cell *matCellDef="let element"> {{element.transactionAt | date:'full'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+    <div class="text-label-for-table-without-data" *ngIf="dataSource == null"> Sem informações? Então tente: 1) Importar CNAB e/ou 2)Selecione uma loja</div>
+    <mat-paginator #paginator (page)="onPageChanged($event)" [length]="lengthElements" [pageSize]="pageSize"
+                   showFirstLastButtons>
+    </mat-paginator>
+</div>

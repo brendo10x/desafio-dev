@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+
+  angular:
+    build: 
+       context: frontend/.      
+       dockerfile: Dockerfile
+       args:
+        PROFILE_ACTIVE_CLIENT: prod
+    environment:
+       - PROFILE_ACTIVE_CLIENT=prod 
+    ports:
+      - 5200:1827
+    networks:
+      - network-app
+    depends_on:
+      - spring-boot
+      
+  spring-boot:
+      build: 
+         context: backend/.
+         dockerfile: Dockerfile
+         args:
+          SPRING_PROFILES_ACTIVE: prod     
+      environment:
+       - SPRING_PROFILES_ACTIVE=prod              
+      ports:
+        - 9090:8080
+      depends_on:
+        - db-postgres-prod
+        - db-postgres-test
+      networks:
+        - network-app  
+        
+  db-postgres-prod:
+    image: postgres:13.1
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 7000:5432
+    networks:
+      - network-app
+            
+  db-postgres-test:
+    image: postgres:13.1
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 9000:5432
+    networks:
+      - network-app   
+      
+networks:
+  network-app:
+      

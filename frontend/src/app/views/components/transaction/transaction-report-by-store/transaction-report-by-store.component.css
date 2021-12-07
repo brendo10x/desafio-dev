@@ -1,0 +1,12 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+    display: table;
+}
+
+.text-label-for-table-without-data{
+    text-align: center;
+    color: aliceblue;
+    padding: 5px;
+}
+
