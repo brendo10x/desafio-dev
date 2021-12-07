@@ -58,7 +58,7 @@ Conforme descritos em detalhes nos arquivos:
 2. backend/Dockerfile
 3. frontend/Dockerfile
 
-## Configurando o backend com Spring Boot
+## 2. Configurando o backend com Spring Boot
 Requisitos:
 - Java 11
 - Maven 3.6.3
@@ -80,7 +80,7 @@ http://localhost:8080/swagger-ui.html
 ### Como rodar os testes?
 Obs: para os testes, será utilizado o JUnit e DBUnit em conjunto. Os testes estão na pasta backend/src/test/java.
 
-## Configurando o frontend com Angular
+## 3. Configurando o frontend com Angular
 Requisitos:
 - Node.js 14
 - npm
