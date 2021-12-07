@@ -32,7 +32,7 @@ Requisitos
 * Java 11
 * Maven 3.6.3
 * NPM
-* Node 14
+* Node js 14
 
 ## 1. Rodar o Docker
 ```bash
