@@ -56,7 +56,7 @@ public class Store {
 	public BigDecimal getSumByTransaction(TransactionCategoryType type) {
 		return transactions.stream()
 				.filter(t -> t.getTransactionCategory().getTransactionCategoryType() == type)
-				.map(t -> t.getAmount())
+				.map(Transaction::getAmount)
 				.reduce(BigDecimal.ONE, BigDecimal::add);
 	}
 }

@@ -34,6 +34,6 @@ public class TransactionCategory {
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private TransactionCategoryType TransactionCategoryType;
+	private TransactionCategoryType transactionCategoryType;
 
 }

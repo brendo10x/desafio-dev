@@ -27,6 +27,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseTearDown;
 
 import bycoders.com.br.desafiobycoders.entities.Store;
 import bycoders.com.br.desafiobycoders.entities.Transaction;
@@ -36,11 +37,12 @@ import bycoders.com.br.desafiobycoders.repositories.TransactionRepository;
 import bycoders.com.br.desafiobycoders.services.StoreService;
 
 @SpringBootTest
+@DatabaseTearDown
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
-		DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
+		DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
 @Transactional
 @TestPropertySource(locations = "/application-test.properties")
-public class StoreServiceTest {
+class StoreServiceTest {
 
 	@Autowired
 	private StoreService storeService;
@@ -55,14 +57,14 @@ public class StoreServiceTest {
 	private TransactionCategoryRepository TransactionCategoryRepository;
 
 	@BeforeEach
-	public void setUp() {
-		clearTables();
+	 void setUp() {
+
 		importFileCNAB();
 	}
 
 	@Test
 	@DisplayName("Deve retornar cico lojas quando o arquivo CNAB for importado")
-	public void mustReturnFiveStores_WhenToImportFileCNAB() {
+	 void mustReturnFiveStores_WhenToImportFileCNAB() {
 
 		List<Store> stores = storeRepository.findAll();
 
@@ -71,7 +73,7 @@ public class StoreServiceTest {
 
 	@Test
 	@DisplayName("Deve retornar três transações da loja do BAR DO JOÃO quando o arquivo CNAB for importado")
-	public void mustReturnThreeTransactionsByStoreBarDoJoao_WhenToImportFileCNAB() {
+	void mustReturnThreeTransactionsByStoreBarDoJoao_WhenToImportFileCNAB() {
 
 		Store store = storeRepository.findByName("BAR DO JOÃO").get();
 
@@ -84,7 +86,7 @@ public class StoreServiceTest {
 
 	@Test
 	@DisplayName("Deve retornar um saldo positivo de R$489.20 da loja do MERCADO DA AVENIDA quando o arquivo CNAB for importado")
-	public void itMustReturnAPositiveBalanceOf489_20ReaisFromTheMercadoDaAvenida_WhenToImportFileCNAB() {
+	 void itMustReturnAPositiveBalanceOf489_20ReaisFromTheMercadoDaAvenida_WhenToImportFileCNAB() {
 
 		Store store = storeRepository.findByName("MERCADO DA AVENIDA").get();
 
@@ -106,12 +108,7 @@ public class StoreServiceTest {
 
 		return store;
 	}
-
-	private void clearTables() {
-		transactionRepository.deleteAll();
-		storeRepository.deleteAll();
-	}
-
+ 
 	private void importFileCNAB() {
 
 		MultipartFile multipartFile = null;

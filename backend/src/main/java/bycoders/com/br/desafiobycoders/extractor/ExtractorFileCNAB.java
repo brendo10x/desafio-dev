@@ -19,6 +19,8 @@ import bycoders.com.br.desafiobycoders.extractor.layout.TransactionField;
 @Component
 public class ExtractorFileCNAB {
 
+	private ExtractorFileCNAB() {}
+	
 	public static Store extractStore(String line) {
 		return Store.builder()
 				.name(getField(line, NAME))
@@ -34,7 +36,7 @@ public class ExtractorFileCNAB {
 				.transactionCategory(TransactionCategory.builder().id(Long.parseLong(getField(line, TYPE))).build())
 				.transactionAt(LocalDateTime.parse(getField(line, TransactionField.DATE_OF_OCCURRENCE)
 						+ getField(line, TransactionField.TIME_OF_OCCURRENCE), formatter))
-				.amount(new BigDecimal(getField(line, TransactionField.AMOUNT)).divide(new BigDecimal(100.00)))
+				.amount(new BigDecimal(getField(line, TransactionField.AMOUNT)).divide(BigDecimal.valueOf(100.00)))
 				.beneficiarysCpf(getField(line, TransactionField.BENEFICIARYS_CPF))
 				.cardNumber(getField(line, TransactionField.CARD_NUMBER)).build();
 	}

@@ -14,5 +14,5 @@ public class TransactionCategoryDTO {
 
 	private String description;
 
-	private TransactionCategoryType TransactionCategoryType;
+	private TransactionCategoryType transactionCategoryType;
 }

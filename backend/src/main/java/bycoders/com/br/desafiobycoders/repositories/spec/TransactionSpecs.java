@@ -10,6 +10,8 @@ import bycoders.com.br.desafiobycoders.entities.Transaction;
 import bycoders.com.br.desafiobycoders.repositories.filter.TransactionFilter;
 
 public class TransactionSpecs {
+	
+	private TransactionSpecs() {}
 
 	public static Specification<Transaction> usingFilter(TransactionFilter filter) {
 		return (root, query, builder) -> {

@@ -30,7 +30,7 @@ public class StoreResource {
 
 
 	@PostMapping("/upload-cnab")
-	public ResponseEntity<?> uploadFileCNAB(@RequestPart MultipartFile file) {
+	public ResponseEntity<String> uploadFileCNAB(@RequestPart MultipartFile file) {
 
 		try {
 			storeService.batchInsertFromFile(file);
