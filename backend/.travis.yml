@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - oraclejdk11
+dist: trusty
+
+addons:
+  apt:
+    packages:
+      - oraclejdk11
+jdk: oraclejdk11
