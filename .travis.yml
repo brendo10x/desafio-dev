@@ -22,4 +22,4 @@ addons:
   sonarcloud:
     organization: "brendo10x"
     token:
-      secure: $SONAR_TOKEN
+      secure: ${SONAR_TOKEN}
