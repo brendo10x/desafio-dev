@@ -9,6 +9,12 @@ jobs:
       script:
       - cd frontend
       - npm install -g @angular/cli
+      - sonar-scanner
+      addons:
+        sonarcloud:
+          organization: "brendo10x"
+          token:
+            secure: "636975d39c7874fd31732421e580098f29f3a196"
 
     - language: java
       jdk:
@@ -17,11 +23,6 @@ jobs:
         directories:
         - $HOME/.m2
         - $HOME/.sonar/cache
-      addons:
-        sonarcloud:
-          organization: "brendo10x"
-          token:
-            secure: "636975d39c7874fd31732421e580098f29f3a196"
       script:
       - cd backend
-      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=brendo10x_desafio-dev -DskipTests=true
+      - mvn install -DskipTests=true
