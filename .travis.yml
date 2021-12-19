@@ -1,3 +1,4 @@
+sudo: required
 dist: xenial
 
 jobs:
@@ -15,11 +16,12 @@ jobs:
       cache:
         directories:
         - $HOME/.m2
+        - $HOME/.sonar/cache
       script:
       - cd backend
-      - sonar-scanner -Dsonar.projectKey=brendo10x_desafio-dev
-addons:
-  sonarcloud:
-    organization: "brendo10x"
-    token:
-      secure: ${SONAR_TOKEN}
+      - sonar-scanner
+      addons:
+        sonarcloud:
+          organization: "brendo10x"
+          token:
+            secure: "423b291f433fae06a9a6416dfbdbdf76637d8210"
