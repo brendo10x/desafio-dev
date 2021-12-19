@@ -17,8 +17,7 @@ jobs:
         - $HOME/.m2
       script:
       - cd backend
-      - mvn install -DskipTests=true
-      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=brendo10x_desafio-dev
+      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=brendo10x_desafio-dev -DskipTests=true
 addons:
   sonarcloud:
     organization: "brendo10x"
