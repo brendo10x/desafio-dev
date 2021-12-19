@@ -22,4 +22,4 @@ addons:
   sonarcloud:
     organization: "brendo10x"
     token:
-      secure: "d10b4681c26f27241476024c4a94576b052702e9" # encrypted value of your token
+      secure: "667b0d688576e25d1169b74df7bc591ccdae8dc6" # encrypted value of your token
