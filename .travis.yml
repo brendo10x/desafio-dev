@@ -1,0 +1,12 @@
+language: java
+jdk:
+  - oraclejdk16
+dist: trusty
+
+cache:
+  directories:
+  - $HOME/.m2
+
+script:
+  - cd backend
+  - mvn install -DskipTests=true
