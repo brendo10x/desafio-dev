@@ -7,7 +7,7 @@ jobs:
       cache: npm
       script:
       - cd frontend
-      - npm install
+      - npm install -g @angular/cli
 
     - language: java
       jdk:
