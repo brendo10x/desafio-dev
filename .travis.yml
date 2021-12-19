@@ -21,7 +21,7 @@ jobs:
         sonarcloud:
           organization: "brendo10x"
           token:
-            secure: "423b291f433fae06a9a6416dfbdbdf76637d8210"
+            secure: "636975d39c7874fd31732421e580098f29f3a196"
       script:
       - cd backend
       - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=brendo10x_desafio-dev -DskipTests=true
