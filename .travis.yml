@@ -19,4 +19,4 @@ jobs:
       script:
       - cd backend
       - mvn clean install -DskipTests=true
-      - mvn sonar:sonar -Dsonar.login=c2b6f93746cc36e610012932c03176c63ca58049 
+      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.login=c2b6f93746cc36e610012932c03176c63ca58049 
