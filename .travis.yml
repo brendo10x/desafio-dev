@@ -18,13 +18,5 @@ jobs:
         - $HOME/.sonar/cache
       script:
       - cd backend
-      - mvn install -DskipTests=true
-      
-addons:
-  sonarcloud:
-    organization: "brendo10x"
-    token:
-      secure: "12483632428e14f0fb14986f5fc9f13102ecb3cb"
-script:
-  - sonar-scanner
-      
+      - mvn clean install -DskipTests=true
+      - mvn sonar:sonar -Dsonar.login=c2b6f93746cc36e610012932c03176c63ca58049 
