@@ -1,4 +1,3 @@
-sudo: required
 dist: xenial
 
 jobs:
@@ -10,11 +9,6 @@ jobs:
       - cd frontend
       - npm install -g @angular/cli
       - sonar-scanner
-      addons:
-        sonarcloud:
-          organization: "brendo10x"
-          token:
-            secure: "636975d39c7874fd31732421e580098f29f3a196"
 
     - language: java
       jdk:
@@ -26,3 +20,12 @@ jobs:
       script:
       - cd backend
       - mvn install -DskipTests=true
+      
+addons:
+  sonarcloud:
+    organization: "brendo10x"
+    token:
+      secure: "12483632428e14f0fb14986f5fc9f13102ecb3cb"
+script:
+  - sonar-scanner
+      
