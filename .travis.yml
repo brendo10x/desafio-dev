@@ -1,12 +1,20 @@
-language: java
-jdk:
-  - oraclejdk16
-dist: trusty
+dist: xenial
 
-cache:
-  directories:
-  - $HOME/.m2
+jobs:
+  include:
+    - language: node_js
+      node_js: 14
+      cache: npm
+      script:
+      - cd frontend
+      - npm install
 
-script:
-  - cd backend
-  - mvn install -DskipTests=true
+    - language: java
+      jdk:
+      - oraclejdk16
+      cache:
+        directories:
+        - $HOME/.m2
+      script:
+      - cd backend
+      - mvn install -DskipTests=true
