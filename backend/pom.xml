@@ -129,7 +129,7 @@
 						</goals>
 					</execution>
 
-					<execution>
+<!-- 					<execution>
 						<id>jacoco-check</id>
 						<goals>
 							<goal>check</goal>
@@ -148,7 +148,7 @@
 								</rule>
 							</rules>
 						</configuration>
-					</execution>
+					</execution> -->
 
 				</executions>
 			</plugin>
