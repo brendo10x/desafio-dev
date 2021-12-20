@@ -18,6 +18,6 @@ jobs:
         - $HOME/.sonar/cache
       script:
       - cd backend
-      - mvn clean install -DskipTests=true
-      - mvn sonar:sonar -Dsonar.login=c2b6f93746cc36e610012932c03176c63ca58049 
+      - mvn install -DskipTests=false
+      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Dsonar.organization=brendo10x -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=c2b6f93746cc36e610012932c03176c63ca58049 
       
