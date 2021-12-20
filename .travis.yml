@@ -19,5 +19,5 @@ jobs:
       script:
       - cd backend
       - mvn clean install -DskipTests=true
-      - mvn -Dsonar.coverage.jacoco.xmlReportPaths=report1.xml,report2.xml sonar:sonar -Dsonar.login=c2b6f93746cc36e610012932c03176c63ca58049 
+      - mvn sonar:sonar -Dsonar.login=c2b6f93746cc36e610012932c03176c63ca58049 
       
