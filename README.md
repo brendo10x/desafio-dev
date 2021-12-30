@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/brendo10x/desafio-dev.svg?branch=main)](https://app.travis-ci.com/brendo10x/desafio-dev)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bycoders.com.br%3Adesafio-bycoders&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bycoders.com.br%3Adesafio-bycoders)
 # Desafio programação - para vaga desenvolvedor
  
 ### Para rodar a aplicação
