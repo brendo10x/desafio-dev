@@ -28,7 +28,6 @@ public class StoreResource {
 	@Autowired
 	private StoreService storeService;
 
-
 	@PostMapping("/upload-cnab")
 	public ResponseEntity<String> uploadFileCNAB(@RequestPart MultipartFile file) {
 
@@ -45,7 +44,7 @@ public class StoreResource {
 	}
 
 	@GetMapping
-	public List<StoreDTO> findAllStories() {
+	public List<StoreDTO> findAllStores() {
 		return storeService.findAllStores();
 	}
 

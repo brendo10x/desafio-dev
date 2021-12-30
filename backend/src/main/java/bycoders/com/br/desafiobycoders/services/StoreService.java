@@ -65,10 +65,7 @@ public class StoreService {
 		}
 	}
 
-	 
-
 	public List<StoreDTO> findAllStores() {
-
 		List<Store> stores = storeRepository.findAll();
 		return stores.stream().map(store -> modelMapper.map(store, StoreDTO.class)).collect(Collectors.toList());
 	}
