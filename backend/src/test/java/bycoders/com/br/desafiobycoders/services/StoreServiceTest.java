@@ -10,32 +10,32 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.multipart.MultipartFile;
 
 import bycoders.com.br.desafiobycoders.expections.InvalidCNABFileException;
 import bycoders.com.br.desafiobycoders.utils.FileParser;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { StoreService.class })
+@ExtendWith(MockitoExtension.class)
 class StoreServiceTest {
 
-	@Autowired
+	@InjectMocks
 	private StoreService storeService;
 
-	@MockBean
+	@Mock
 	private FileParser fileParser;
 
 	@Test
 	void shouldImportFileCNABWithSuccessfully() throws IOException {
-
+		// Arrange
 		MultipartFile mockFileCNABValid = mock(MultipartFile.class);
 		
+		// Act
 		when(fileParser.parse(mockFileCNABValid)).thenReturn(new ArrayList<String>());
 		 
+		// Assert
 		storeService.batchInsertFromFile(mockFileCNABValid);
 	}
 
