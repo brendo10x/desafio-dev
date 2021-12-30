@@ -73,8 +73,7 @@ class StoreServiceTest {
 
 		assertThat(store.getBalance(), is(new BigDecimal("489.20")));
 	}
-
-
+ 
 	private void importFileCNAB() {
 
 		MultipartFile multipartFile = null;

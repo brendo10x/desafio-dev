@@ -1,5 +1,7 @@
 package bycoders.com.br.desafiobycoders.entities;
 
+import static bycoders.com.br.desafiobycoders.utils.StoreCalculator.calculateBalanceFromStoreByTransactions;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -12,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import bycoders.com.br.desafiobycoders.enums.TransactionCategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,17 +47,8 @@ public class Store {
 	private BigDecimal balance;
 
 	public BigDecimal getBalance() {
-
-		BigDecimal income = getSumByTransaction(TransactionCategoryType.INCOME);
-		BigDecimal outcome = getSumByTransaction(TransactionCategoryType.OUTCOME);
-
-		return income.subtract(outcome);
+		return calculateBalanceFromStoreByTransactions(transactions);
 	}
 
-	public BigDecimal getSumByTransaction(TransactionCategoryType type) {
-		return transactions.stream()
-				.filter(t -> t.getTransactionCategory().getTransactionCategoryType() == type)
-				.map(Transaction::getAmount)
-				.reduce(BigDecimal.ONE, BigDecimal::add);
-	}
+ 
 }

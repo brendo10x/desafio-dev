@@ -40,20 +40,20 @@ public class StoreService {
 		try {
 			List<String> lines = fileParser.parse(file);
 
-			lines.forEach(line -> {
-
-				Store store = ExtractorFileCNAB.extractStore(line);
-				Optional<Store> storeOptional = storeRepository.findByName(store.getName());
-
-				if (!storeOptional.isPresent()) {
-					store = storeRepository.save(store);
-				} else {
-					store = storeOptional.get();
-				}
-
-				Transaction transaction = ExtractorFileCNAB.extractTransaction(line);
-				transaction.setStore(store);
-				transactionRepository.save(transaction);
+				lines.forEach(line -> {
+	
+					Store store = ExtractorFileCNAB.extractStore(line);
+					Optional<Store> storeOptional = storeRepository.findByName(store.getName());
+	
+					if (!storeOptional.isPresent()) {
+						store = storeRepository.save(store);
+					} else {
+						store = storeOptional.get();
+					}
+	
+					Transaction transaction = ExtractorFileCNAB.extractTransaction(line);
+					transaction.setStore(store);
+					transactionRepository.save(transaction);
 
 				log.info("cnab file line imported successfully: " + line);
 			});
@@ -65,6 +65,7 @@ public class StoreService {
 		}
 	}
 
+	 
 
 	public List<StoreDTO> findAllStories() {
 
