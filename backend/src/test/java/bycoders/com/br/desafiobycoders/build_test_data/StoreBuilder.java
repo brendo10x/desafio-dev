@@ -21,6 +21,11 @@ public class StoreBuilder {
 		
 		return builder;
 	}
+	
+	public StoreBuilder withId(Long id) {
+		store.setId(id);
+		return this;
+	}
 
 	public Store now() {
 		return store;

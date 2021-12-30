@@ -46,7 +46,7 @@ public class StoreResource {
 
 	@GetMapping
 	public List<StoreDTO> findAllStories() {
-		return storeService.findAllStories();
+		return storeService.findAllStores();
 	}
 
 }

@@ -48,6 +48,11 @@ public class TransactionBuilder {
 		return transactionBuilder;
 	}
 	
+	public TransactionBuilder withId(Long id) {
+		transaction.setId(id);
+		return this;
+	}
+	
 	public TransactionBuilder withStore(Store store) {
 		transaction.setStore(store);
 		return this;
@@ -57,8 +62,6 @@ public class TransactionBuilder {
 		transaction.setAmount(amount);
 		return this;
 	}
-	
-	
 	
 	public TransactionBuilder withBeneficiarysCpf(String beneficiarysCpf) {
 		transaction.setBeneficiarysCpf(beneficiarysCpf);
