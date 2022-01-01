@@ -3,14 +3,12 @@ package bycoders.com.br.desafiobycoders.services;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
+import bycoders.com.br.desafiobycoders.core.mapper.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.StoreDTO;
 import bycoders.com.br.desafiobycoders.entities.Store;
 import bycoders.com.br.desafiobycoders.entities.Transaction;
@@ -35,10 +33,7 @@ public class StoreService {
 	private TransactionRepository transactionRepository;
 
 	@Autowired
-	ModelMapper modelMapper;
-	
-	@Autowired
-	ConverterMapper mapper;
+	ConverterMapper converterMapper;
 
 	public void batchInsertFromFile(MultipartFile file) throws InvalidCNABFileException {
 		try {
@@ -71,7 +66,8 @@ public class StoreService {
 
 	public List<StoreDTO> findAllStores() {
 		List<Store> stores = storeRepository.findAll();
-		return mapper.convertToList(stores, StoreDTO.class);
+		List<StoreDTO> storesDTO = converterMapper.convertToList(stores, StoreDTO.class);
+		return storesDTO;
 	}
  
 }

@@ -11,21 +11,25 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import bycoders.com.br.desafiobycoders.TestCaseConfiguration;
 import bycoders.com.br.desafiobycoders.build_test_data.TransactionBuilder;
-import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
+import bycoders.com.br.desafiobycoders.core.mapper.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.TransactionDTO;
 import bycoders.com.br.desafiobycoders.entities.Transaction;
 import bycoders.com.br.desafiobycoders.repositories.TransactionRepository;
 import bycoders.com.br.desafiobycoders.repositories.filter.TransactionFilter;
 import bycoders.com.br.desafiobycoders.repositories.spec.TransactionSpecs;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
+@Import(TestCaseConfiguration.class)
 class TransactionServiceTest {
 
 	@Mock
@@ -37,7 +41,8 @@ class TransactionServiceTest {
 	@InjectMocks
 	private TransactionService transactionService;
 	
-	private ConverterMapper converterMapper = new ConverterMapper();
+	@Autowired
+	private ConverterMapper converterMapper;
 	
 	@Test
 	final void findAllTransactionsDTO_shouldReturnAll() {

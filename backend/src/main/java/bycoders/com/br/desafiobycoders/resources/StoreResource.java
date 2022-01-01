@@ -45,7 +45,9 @@ public class StoreResource {
 
 	@GetMapping
 	public List<StoreDTO> findAllStores() {
-		return storeService.findAllStores();
+		List<StoreDTO> storesDTO = storeService.findAllStores();
+		 
+		return storesDTO;
 	}
 
 }

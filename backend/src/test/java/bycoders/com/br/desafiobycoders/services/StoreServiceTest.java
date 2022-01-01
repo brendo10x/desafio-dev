@@ -15,18 +15,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.multipart.MultipartFile;
 
+import bycoders.com.br.desafiobycoders.TestCaseConfiguration;
 import bycoders.com.br.desafiobycoders.build_test_data.StoreBuilder;
-import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
+import bycoders.com.br.desafiobycoders.core.mapper.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.StoreDTO;
 import bycoders.com.br.desafiobycoders.entities.Store;
 import bycoders.com.br.desafiobycoders.expections.InvalidCNABFileException;
 import bycoders.com.br.desafiobycoders.repositories.StoreRepository;
 import bycoders.com.br.desafiobycoders.utils.FileParser;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
+@Import(TestCaseConfiguration.class)
 class StoreServiceTest {
 
 	@Mock
@@ -41,7 +45,8 @@ class StoreServiceTest {
 	@InjectMocks
 	private StoreService storeService;
 	
-	private ConverterMapper converterMapper = new ConverterMapper();
+	@Autowired
+	private ConverterMapper converterMapper;
 	
 	@Test
 	void shouldImportFileCNABWithSuccessfully() throws IOException {

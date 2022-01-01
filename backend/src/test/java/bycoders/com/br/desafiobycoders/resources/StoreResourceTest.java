@@ -15,19 +15,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
+import bycoders.com.br.desafiobycoders.TestCaseConfiguration;
+import bycoders.com.br.desafiobycoders.core.mapper.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.StoreDTO;
 import bycoders.com.br.desafiobycoders.entities.Store;
 import bycoders.com.br.desafiobycoders.expections.InvalidCNABFileException;
 import bycoders.com.br.desafiobycoders.services.StoreService;
 
 @WebMvcTest(controllers = StoreResource.class)
+@Import(TestCaseConfiguration.class)
 class StoreResourceTest {
 
 	private static final String STORES_API = "/api/v1/stores/";
@@ -38,7 +41,8 @@ class StoreResourceTest {
 	@MockBean
 	private StoreService mockStoreService;
 	
-	private ConverterMapper converterMapper = new ConverterMapper();
+	@Autowired
+	private ConverterMapper converterMapper;
 	
 	@Test
 	void shouldUploadFileCNAB() throws Exception {

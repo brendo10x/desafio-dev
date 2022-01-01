@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import bycoders.com.br.desafiobycoders.build_test_data.StoreBuilder;
-import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
+import bycoders.com.br.desafiobycoders.core.mapper.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.StoreDTO;
 import bycoders.com.br.desafiobycoders.entities.Store;
 

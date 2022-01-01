@@ -3,8 +3,6 @@ package bycoders.com.br.desafiobycoders.dtos;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonRootName(value = "transactions") 
 public class TransactionDTO {
 
 	private Long id;

@@ -36,7 +36,7 @@ public class Transaction {
 	private LocalDateTime transactionAt;
 	
 	@Column(nullable = false)
-	private BigDecimal amount;
+	private BigDecimal amount;	
 	
 	@Column(nullable = false)
 	private String beneficiarysCpf;

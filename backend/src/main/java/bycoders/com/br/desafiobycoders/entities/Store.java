@@ -24,7 +24,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "stores")
 public class Store {
@@ -49,6 +48,5 @@ public class Store {
 	public BigDecimal getBalance() {
 		return calculateBalanceFromStoreByTransactions(transactions);
 	}
-
  
 }

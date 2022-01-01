@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
+import bycoders.com.br.desafiobycoders.core.mapper.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.TransactionDTO;
 import bycoders.com.br.desafiobycoders.entities.Transaction;
 import bycoders.com.br.desafiobycoders.repositories.TransactionRepository;
@@ -21,13 +21,13 @@ public class TransactionService {
 	private TransactionRepository transactionRepository;
 
 	@Autowired
-	private ConverterMapper mapperModel;
+	private ConverterMapper converterMapper;
 
 	public Page<TransactionDTO> findAllTransactionsDTO(Specification<Transaction> transactionFilter,
 			Pageable pageable) {
 		 
 		Page<Transaction> transactionsPage = transactionRepository.findAll(transactionFilter, pageable);
-		List<TransactionDTO> transactionsDTO = mapperModel.convertToList(transactionsPage.getContent(), TransactionDTO.class);
+		List<TransactionDTO> transactionsDTO = converterMapper.convertToList(transactionsPage.getContent(), TransactionDTO.class);
 		return new PageImpl<>(transactionsDTO, transactionsPage.getPageable(), transactionsPage.getTotalElements());
 	}
 
