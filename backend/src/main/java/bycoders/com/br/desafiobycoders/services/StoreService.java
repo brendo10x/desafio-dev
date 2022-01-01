@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.StoreDTO;
 import bycoders.com.br.desafiobycoders.entities.Store;
 import bycoders.com.br.desafiobycoders.entities.Transaction;
@@ -35,6 +36,9 @@ public class StoreService {
 
 	@Autowired
 	ModelMapper modelMapper;
+	
+	@Autowired
+	ConverterMapper mapper;
 
 	public void batchInsertFromFile(MultipartFile file) throws InvalidCNABFileException {
 		try {
@@ -67,7 +71,7 @@ public class StoreService {
 
 	public List<StoreDTO> findAllStores() {
 		List<Store> stores = storeRepository.findAll();
-		return stores.stream().map(store -> modelMapper.map(store, StoreDTO.class)).collect(Collectors.toList());
+		return mapper.convertToList(stores, StoreDTO.class);
 	}
  
 }

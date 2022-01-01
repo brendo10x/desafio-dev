@@ -10,10 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.StoreDTO;
 import bycoders.com.br.desafiobycoders.entities.Store;
 import bycoders.com.br.desafiobycoders.expections.InvalidCNABFileException;
@@ -36,10 +35,10 @@ class StoreResourceTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	private ModelMapper modelMapperService = new ModelMapper();
-	
 	@MockBean
-	private StoreService storeService;
+	private StoreService mockStoreService;
+	
+	private ConverterMapper converterMapper = new ConverterMapper();
 	
 	@Test
 	void shouldUploadFileCNAB() throws Exception {
@@ -48,7 +47,7 @@ class StoreResourceTest {
 																    "CNAB.txt",
 																    MediaType.TEXT_PLAIN_VALUE, new FileInputStream(new File("src/test/resources/cnab_files/CNAB.txt")));
 		
-		doNothing().when(storeService).batchInsertFromFile(mockFileCNABValid);
+		doNothing().when(mockStoreService).batchInsertFromFile(mockFileCNABValid);
 		
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
 													.multipart(STORES_API + "upload-cnab")
@@ -67,7 +66,7 @@ class StoreResourceTest {
 		MockMultipartFile mockFileCNABInvalid = new MockMultipartFile("file","CNAB.txt",
 				MediaType.TEXT_PLAIN_VALUE, new FileInputStream(new File("src/test/resources/cnab_files/CNAB.txt")));
 		 
-		doThrow(new InvalidCNABFileException()).when(storeService).batchInsertFromFile(mockFileCNABInvalid);
+		doThrow(new InvalidCNABFileException()).when(mockStoreService).batchInsertFromFile(mockFileCNABInvalid);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
 				.multipart(STORES_API + "upload-cnab")
@@ -83,9 +82,9 @@ class StoreResourceTest {
 	void shouldFindAllStores() throws Exception{
 		// Arrange
 		List<Store> stores = List.of(aStore().withId(1L).now(), aStore().withId(2L).now()); 
-		List<StoreDTO> storesDTO = stores.stream().map(store -> modelMapperService.map(store, StoreDTO.class)).collect(Collectors.toList());
+		List<StoreDTO> storesDTO = converterMapper.convertToList(stores, StoreDTO.class);
 		
-		when(storeService.findAllStores()).thenReturn(storesDTO);
+		when(mockStoreService.findAllStores()).thenReturn(storesDTO);
 		
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
 				.get(STORES_API)

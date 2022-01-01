@@ -8,17 +8,14 @@ import static org.assertj.core.api.BDDAssertions.then;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import bycoders.com.br.desafiobycoders.entities.Store;
 import bycoders.com.br.desafiobycoders.entities.Transaction;
 
-@ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @DataJpaTest
 class TransactionRepositoryTest {

@@ -12,13 +12,13 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import bycoders.com.br.desafiobycoders.build_test_data.TransactionBuilder;
+import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.TransactionDTO;
 import bycoders.com.br.desafiobycoders.entities.Transaction;
 import bycoders.com.br.desafiobycoders.repositories.TransactionRepository;
@@ -28,28 +28,26 @@ import bycoders.com.br.desafiobycoders.repositories.spec.TransactionSpecs;
 @ExtendWith(MockitoExtension.class)
 class TransactionServiceTest {
 
+	@Mock
+	private TransactionRepository mockTransactionRepository;  
+
+	@Mock
+	private ConverterMapper mockConverterMapper;
+	
 	@InjectMocks
 	private TransactionService transactionService;
-
-	@InjectMocks
-	private ModelMapper modelMapperService;
 	
-	@Mock
-	private TransactionRepository transactionRepository;  
-
-	@Mock
-	private ModelMapper modelMapper;
-	
+	private ConverterMapper converterMapper = new ConverterMapper();
 	
 	@Test
-	final void shouldReturnAllTransactionsDTO() {
+	final void findAllTransactionsDTO_shouldReturnAll() {
 		// Arrange
 		Transaction transaction = TransactionBuilder.aTrasanctionWithBoleto().withId(1L).now();
-		TransactionDTO transactionsDTO = modelMapperService.map(transaction,TransactionDTO.class);
+		TransactionDTO transactionsDTO = converterMapper.convertTo(transaction, TransactionDTO.class);
 		Page<Transaction> pagedTransaction = new PageImpl<>(List.of(transaction));
 
-		when(transactionRepository.findAll(ArgumentMatchers.<Specification<Transaction>>any(), any(Pageable.class))).thenReturn(pagedTransaction);
-		when(modelMapper.map(any(), any())).thenReturn(transactionsDTO);
+		when(mockTransactionRepository.findAll(ArgumentMatchers.<Specification<Transaction>>any(), any(Pageable.class))).thenReturn(pagedTransaction);
+		when(mockConverterMapper.convertToList(any(), ArgumentMatchers.<Class<TransactionDTO>>any())).thenReturn(List.of(transactionsDTO));
 		
 		// Act
 		Page<TransactionDTO> filteredTransactions = transactionService

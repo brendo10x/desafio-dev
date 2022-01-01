@@ -1,6 +1,5 @@
 package bycoders.com.br.desafiobycoders.resources;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +22,6 @@ public class TransactionResource {
 
 	@Autowired
 	private TransactionService transactionService;
-
-	@Autowired
-	ModelMapper modelMapper;
 
 	@GetMapping
 	public Page<TransactionDTO> findAllTransactions(TransactionFilter transactionFilter, Pageable pageable) {

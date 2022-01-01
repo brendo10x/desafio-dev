@@ -12,13 +12,14 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import bycoders.com.br.desafiobycoders.build_test_data.StoreBuilder;
+import bycoders.com.br.desafiobycoders.converter.ConverterMapper;
 import bycoders.com.br.desafiobycoders.dtos.StoreDTO;
 import bycoders.com.br.desafiobycoders.entities.Store;
 import bycoders.com.br.desafiobycoders.expections.InvalidCNABFileException;
@@ -28,28 +29,27 @@ import bycoders.com.br.desafiobycoders.utils.FileParser;
 @ExtendWith(MockitoExtension.class)
 class StoreServiceTest {
 
+	@Mock
+	private FileParser mockFileParser;	
+	
+	@Mock
+	private ConverterMapper mockConverterMapper;
+
+	@Mock 
+	private StoreRepository mockStoreRepository;
+	 
 	@InjectMocks
 	private StoreService storeService;
-
-	@InjectMocks
-	private ModelMapper modelMapperService;
-
-	@Mock
-	private FileParser fileParser;
 	
-	@Mock 
-	private StoreRepository storeRepository;
+	private ConverterMapper converterMapper = new ConverterMapper();
 	
-	@Mock
-	private ModelMapper modelMapper;
-
 	@Test
 	void shouldImportFileCNABWithSuccessfully() throws IOException {
 		// Arrange
 		MultipartFile mockFileCNABValid = mock(MultipartFile.class);
 		
 		// Act
-		when(fileParser.parse(mockFileCNABValid)).thenReturn(new ArrayList<String>());
+		when(mockFileParser.parse(mockFileCNABValid)).thenReturn(new ArrayList<String>());
 		 
 		// Assert
 		storeService.batchInsertFromFile(mockFileCNABValid);
@@ -59,8 +59,9 @@ class StoreServiceTest {
 	void shouldThrowInvalidCNABFileExceptionForAInvalidFile() throws IOException {
 		// Arrange
 		MultipartFile mockFileCNABInvalid = mock(MultipartFile.class);
+		
 		when(mockFileCNABInvalid.getName()).thenReturn("CNAB.txt");
-		when(fileParser.parse(mockFileCNABInvalid)).thenThrow(new IOException());
+		when(mockFileParser.parse(mockFileCNABInvalid)).thenThrow(new IOException());
 
 		// Act
 		Throwable thrown = catchThrowable(() -> storeService.batchInsertFromFile(mockFileCNABInvalid));
@@ -73,19 +74,22 @@ class StoreServiceTest {
 	@Test
 	void shouldReturnAllStores() {
 		// Arrange
-		Store store = StoreBuilder.aStore().withId(1L).now();
-		StoreDTO storeDTO = modelMapperService.map(store, StoreDTO.class);
+		Store firstStore = StoreBuilder.aStore().withId(1L).now();
+		Store secondStore = StoreBuilder.aStore().withId(1L).now();
 		
-		when(storeRepository.findAll()).thenReturn(List.of(store));
-		when(modelMapper.map(any(), any())).thenReturn(storeDTO);
+		List<Store> stores = List.of(firstStore, secondStore);
+		List<StoreDTO> storesDTO = converterMapper.convertToList(stores, StoreDTO.class);
+		
+		when(mockStoreRepository.findAll()).thenReturn(stores);
+		when(mockConverterMapper.convertToList(any(), ArgumentMatchers.<Class<StoreDTO>>any())).thenReturn(storesDTO);
 		
 		// Act
 		List<StoreDTO> foundStores = storeService.findAllStores();
 		
 		// Assert
 		then(foundStores).isNotEmpty()
-						 .hasSize(1)
-						 .contains(storeDTO);
+						 .hasSize(2)
+						 .containsAll(storesDTO);
 	}
 
 }
